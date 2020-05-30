@@ -1,6 +1,13 @@
-import { serve } from "https://deno.land/std@0.54.0/http/server.ts";
-const s = serve({ port: 8000 });
-console.log("http://localhost:8000/");
-for await (const req of s) {
-  req.respond({ body: "Hello World\n" });
-}
+// Using Oak middleware
+import { Application } from "https://deno.land/x/oak/mod.ts";
+
+const app = new Application();
+
+app.use(({ response }) => {
+  response.body = "Hello World";
+});
+
+const port = 5000;
+
+console.log(`App listen at port: ${port}`);
+await app.listen({ port });
